@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GOYB | Get Off of Your BUT • Restore Your Power</title>
+  <style>
+    :root{
+      --bg:#eef5fb;
+      --bg-2:#f8fbfe;
+      --card:rgba(255,255,255,0.78);
+      --card-strong:rgba(255,255,255,0.92);
+      --ink:#24384e;
+      --muted:#5c728a;
+      --line:rgba(78,113,147,0.18);
+      --primary:#496f96;
+      --primary-2:#6f8fb2;
+      --accent:#8faecc;
+      --deep:#2e4a68;
+      --mist:#dce9f6;
+      --silver:#dfe6ee;
+      --pearl:#f7fbff;
+      --glow:0 18px 50px rgba(61,97,133,0.15);
+      --radius:26px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;background:
+      radial-gradient(circle at top left, rgba(162,193,222,0.35), transparent 35%),
+      radial-gradient(circle at right, rgba(123,166,208,0.18), transparent 25%),
+      linear-gradient(180deg, #f4f8fc 0%, #edf5fb 45%, #f7fbff 100%);
+      color:var(--ink);
+      scroll-behavior:smooth;
+    }
+    a{text-decoration:none;color:inherit}
+    button{font:inherit}
+    .page{display:none;min-height:100vh;padding:24px}
+    .page.active{display:block}
+    .shell{max-width:1240px;margin:0 auto}
+    .glass{
+      background:var(--card);
+      backdrop-filter: blur(14px);
+      border:1px solid rgba(255,255,255,0.65);
+      box-shadow:var(--glow);
+      border-radius:var(--radius);
+    }
+
+    .topbar{
+      display:flex;align-items:center;justify-content:space-between;gap:16px;
+      padding:16px 22px;margin-bottom:20px;
+      position:sticky;top:16px;z-index:50;
+      background:rgba(255,255,255,0.72);backdrop-filter: blur(14px);
+      border:1px solid rgba(255,255,255,0.65);border-radius:24px;box-shadow:var(--glow);
+    }
+    .brand{display:flex;align-items:center;gap:14px}
+    .brand-mark{
+      width:46px;height:46px;border-radius:16px;
+      background:linear-gradient(145deg, #7f9fbe, #4a6f95);
+      position:relative;box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 12px 28px rgba(73,111,150,.22);
+    }
+    .brand-mark:before, .brand-mark:after{
+      content:"";position:absolute;border-radius:999px;background:rgba(255,255,255,0.65)
+    }
+    .brand-mark:before{width:20px;height:20px;left:8px;top:13px}
+    .brand-mark:after{width:14px;height:14px;right:8px;top:16px}
+    .brand h1{font-size:1.08rem;margin:0;letter-spacing:.08em}
+    .brand p{margin:2px 0 0;color:var(--muted);font-size:.9rem}
+    .nav{display:flex;flex-wrap:wrap;gap:10px}
+    .nav a{
+      padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.55);
+      border:1px solid var(--line);color:var(--deep);font-size:.95rem
+    }
+    .nav a:hover,.nav a.active{background:linear-gradient(180deg,#fefefe,#eef5fb);box-shadow:0 8px 20px rgba(73,111,150,.12)}
+
+    .hero{
+      display:grid;grid-template-columns:1.1fr .9fr;gap:26px;align-items:stretch;
+      margin-top:10px;
+    }
+    .hero-copy{padding:40px}
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;
+      background:rgba(255,255,255,.72);border:1px solid var(--line);color:var(--deep);font-size:.92rem
+    }
+    .eyebrow .dot{width:9px;height:9px;border-radius:999px;background:linear-gradient(145deg,#88a8c7,#5a7da2)}
+    .hero h2{
+      margin:18px 0 14px;font-size:clamp(2.2rem,4.5vw,4.3rem);line-height:.98;letter-spacing:-.04em
+    }
+    .hero p.lead{
+      color:var(--muted);font-size:1.08rem;line-height:1.75;max-width:62ch
+    }
+    .hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:28px}
+    .btn{
+      border:none;border-radius:16px;padding:14px 18px;cursor:pointer;transition:.2s ease;
+      display:inline-flex;align-items:center;justify-content:center;gap:10px
+    }
+    .btn.primary{background:linear-gradient(145deg, var(--primary), var(--primary-2));color:#fff;box-shadow:0 14px 30px rgba(73,111,150,.28)}
+    .btn.secondary{background:rgba(255,255,255,.68);border:1px solid var(--line);color:var(--deep)}
+    .btn:hover{transform:translateY(-1px)}
+    .hero-card{
+      padding:24px;display:grid;grid-template-rows:auto 1fr auto;overflow:hidden;position:relative
+    }
+    .mist{
+      position:absolute;inset:auto -50px 0 auto;width:240px;height:240px;border-radius:50%;
+      background:radial-gradient(circle, rgba(165,196,224,.35), transparent 70%);
+      filter:blur(10px)
+    }
+    .ritual-card{
+      margin-top:20px;padding:22px;border-radius:22px;background:linear-gradient(180deg, rgba(255,255,255,.95), rgba(242,247,252,.88));
+      border:1px solid rgba(95,131,165,.14)
+    }
+    .ritual-title{display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .ritual-title h3{margin:0;font-size:1.2rem}
+    .pill{padding:8px 12px;border-radius:999px;background:#edf4fb;color:var(--primary);font-size:.85rem;border:1px solid var(--line)}
+    .path-mini{display:grid;gap:12px;margin-top:16px}
+    .mini{
+      padding:14px;border-radius:18px;background:#fbfdff;border:1px solid var(--line);
+      display:flex;align-items:center;gap:14px
+    }
+    .icon{
+      width:44px;height:44px;border-radius:14px;background:linear-gradient(145deg,#e8f1fb,#d4e5f4);
+      display:grid;place-items:center;font-size:1.2rem
+    }
+    .mini strong{display:block}
+    .mini span{color:var(--muted);font-size:.93rem}
+
+    .section{margin-top:26px}
+    .section-card{padding:30px}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:20px}
+    .section-head h3{margin:0;font-size:1.75rem}
+    .section-head p{margin:8px 0 0;color:var(--muted);max-width:72ch;line-height:1.7}
+
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+    .feature{
+      padding:22px;border-radius:22px;border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.93), rgba(244,248,252,.88))
+    }
+    .feature h4{margin:14px 0 10px;font-size:1.08rem}
+    .feature p{margin:0;color:var(--muted);line-height:1.7}
+    .feature ul{margin:12px 0 0;padding-left:18px;color:var(--muted);line-height:1.7}
+
+    .journey{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:18px
+    }
+    .journey-card{
+      padding:24px;border-radius:24px;border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.95), rgba(240,246,252,.88));
+      position:relative;overflow:hidden
+    }
+    .journey-card .badge{
+      display:inline-flex;padding:8px 11px;border-radius:999px;background:#eef5fb;border:1px solid var(--line);font-size:.84rem;color:var(--primary)
+    }
+    .journey-card h4{margin:14px 0 10px;font-size:1.18rem}
+    .journey-card p{color:var(--muted);line-height:1.7}
+    .journey-card button{margin-top:14px}
+
+    .show-us{
+      display:grid;grid-template-columns:1.05fr .95fr;gap:18px;align-items:stretch
+    }
+    .input-card,.result-card{padding:26px}
+    .input-card h4,.result-card h4{margin:0 0 12px;font-size:1.2rem}
+    .helper{color:var(--muted);line-height:1.7;margin-bottom:18px}
+    textarea, select, input[type="text"]{
+      width:100%;border:none;outline:none;padding:16px 18px;border-radius:18px;
+      background:rgba(255,255,255,.92);border:1px solid var(--line);font:inherit;color:var(--ink)
+    }
+    textarea{min-height:136px;resize:vertical}
+    .chips{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 18px}
+    .chip{
+      padding:10px 14px;border-radius:999px;background:#f7fbff;border:1px solid var(--line);cursor:pointer;color:var(--deep)
+    }
+    .chip.active{background:linear-gradient(145deg,#dbe9f6,#edf5fb);border-color:#aac2da}
+    .result-box{
+      min-height:320px;padding:20px;border-radius:22px;background:linear-gradient(180deg, rgba(255,255,255,.98), rgba(242,247,251,.92));
+      border:1px dashed rgba(90,125,162,.32)
+    }
+    .prompt-title{font-size:1.35rem;margin:0 0 8px}
+    .label{font-size:.83rem;letter-spacing:.08em;text-transform:uppercase;color:var(--primary)}
+    .quiet{color:var(--muted);line-height:1.75}
+    .steps{display:grid;gap:12px;margin-top:16px}
+    .step{
+      padding:14px 16px;border-radius:16px;background:#fbfdff;border:1px solid var(--line)
+    }
+
+    .journal-layout{
+      display:grid;grid-template-columns:280px 1fr;gap:20px
+    }
+    .sidebar{padding:22px}
+    .sidebar h4{margin:0 0 12px}
+    .nav-list{display:grid;gap:10px}
+    .nav-btn{
+      text-align:left;padding:12px 14px;border-radius:16px;background:#f8fbff;border:1px solid var(--line);cursor:pointer
+    }
+    .nav-btn.active{background:linear-gradient(145deg,#dbe9f7,#f4f9ff)}
+    .workspace{padding:28px}
+    .worksheet{
+      display:grid;gap:16px
+    }
+    .field label{display:block;font-weight:600;margin-bottom:8px}
+    .field textarea,.field input{background:#fff}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .vault-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+    .vault-card{
+      padding:18px;border-radius:20px;background:linear-gradient(180deg, rgba(255,255,255,.95), rgba(243,247,252,.88));
+      border:1px solid var(--line)
+    }
+    .power-card{
+      margin-top:18px;padding:22px;border-radius:24px;
+      background:linear-gradient(145deg,#4b6f95,#89a8c8 55%, #dfeaf5);
+      color:#fff;position:relative;overflow:hidden;box-shadow:0 18px 40px rgba(73,111,150,.25)
+    }
+    .power-card:before{
+      content:"";position:absolute;right:-10%;top:-10%;width:220px;height:220px;border-radius:50%;
+      background:radial-gradient(circle, rgba(255,255,255,.26), transparent 60%)
+    }
+    .power-card small{letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.78)}
+    .power-card h5{font-size:1.4rem;margin:8px 0 10px}
+    .power-card p{line-height:1.8;max-width:48ch}
+    .community-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:18px}
+    .community-feed, .community-lounge{padding:24px}
+    .post{
+      padding:16px;border-radius:16px;background:#fbfdff;border:1px solid var(--line);margin-top:12px
+    }
+    .post strong{display:block}
+    .post p{color:var(--muted);line-height:1.7;margin:8px 0 0}
+    .pricing{
+      padding:26px;border-radius:26px;background:linear-gradient(180deg, rgba(255,255,255,.96), rgba(239,246,252,.92));
+      border:1px solid var(--line)
+    }
+    .tier{
+      display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin-top:18px
+    }
+    .price-box{padding:24px;border-radius:22px;border:1px solid var(--line);background:#fbfdff}
+    .price{font-size:2.4rem;font-weight:700}
+
+    .brand-stack small{
+      display:block;color:var(--primary);letter-spacing:.18em;text-transform:uppercase;font-size:.68rem;margin-bottom:3px
+    }
+    .brand-stack .main{font-size:1.08rem;margin:0;letter-spacing:.08em}
+    .brand-stack .sub{margin:2px 0 0;color:var(--muted);font-size:.9rem}
+    .word-ribbon{
+      margin-top:18px;display:flex;flex-wrap:wrap;gap:10px
+    }
+    .word-ribbon span{
+      padding:9px 12px;border-radius:999px;background:rgba(255,255,255,.7);border:1px solid var(--line);
+      color:var(--deep);font-size:.86rem
+    }
+    .brand-panel{
+      margin-top:22px;padding:20px;border-radius:22px;border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.94), rgba(240,246,252,.86))
+    }
+    .brand-panel h4{margin:0 0 8px;font-size:1.08rem}
+    .brand-panel p{margin:0;color:var(--muted);line-height:1.75}
+    .signature-statement{
+      margin-top:18px;padding:18px 20px;border-radius:20px;
+      background:linear-gradient(145deg, rgba(73,111,150,.10), rgba(255,255,255,.88));
+      border:1px solid rgba(73,111,150,.18)
+    }
+    .signature-statement strong{display:block;margin-bottom:8px}
+
+    .footer{
+      margin-top:28px;padding:22px;text-align:center;color:var(--muted)
+    }
+
+    .hidden{display:none !important}
+
+    @media (max-width: 1024px){
+      .hero,.show-us,.journal-layout,.community-grid,.tier{grid-template-columns:1fr}
+      .grid-3,.journey,.vault-cards{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width: 720px){
+      .page{padding:14px}
+      .topbar{position:static}
+      .hero-copy,.hero-card,.section-card,.input-card,.result-card,.workspace,.sidebar{padding:22px}
+      .grid-3,.grid-2,.journey,.vault-cards,.two-col{grid-template-columns:1fr}
+      .hero h2{font-size:2.35rem}
+      .nav{display:none}
+    }
+  </style>
+</head>
+<body>
+  <div id="home" class="page active">
+    <div class="shell">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-mark"></div>
+          <div class="brand-stack">
+            <small>GOYB Experience</small>
+            <h1 class="main">Get Off of Your BUT</h1>
+            <p class="sub">Restore. Reflect. Reassemble your power.</p>
+          </div>
+        </div>
+        <nav class="nav">
+          <a href="#home" class="route-link active" data-route="home">Home</a>
+          <a href="#journeys" class="route-link" data-route="journeys">Journeys</a>
+          <a href="#journal" class="route-link" data-route="journal">Virtual Journal</a>
+          <a href="#community" class="route-link" data-route="community">Community</a>
+          <a href="#vault" class="route-link" data-route="vault">Vault</a>
+        </nav>
+      </header>
+
+      <section class="hero">
+        <div class="hero-copy glass">
+          <div class="eyebrow"><span class="dot"></span> A calm place to show us your BUT</div>
+          <h2>Enter the soft side of your comeback.</h2>
+          <p class="lead">
+            GOYB is a luxury-feeling restorative space for people recovering from burnout, doubt, overwhelm,
+            and the stories that keep them stuck. Step inside, exhale, and choose a path: interactive journaling,
+            an auditory healing experience, or a community-powered journey toward your next version of self.
+          </p>
+          <div class="word-ribbon">
+            <span>Burnout recovery</span>
+            <span>Luxury calm</span>
+            <span>Personal vaults</span>
+            <span>Power Cards</span>
+            <span>OHM-inspired care</span>
+          </div>
+          <div class="brand-panel">
+            <h4>The GOYB signature</h4>
+            <p>
+              This is where you ignite your <strong>Boldness</strong>, unmute your <strong>Voice</strong>, and transform your
+              <strong>BUT</strong> into your <strong>Power Source</strong>.
+            </p>
+          </div>
+          <div class="signature-statement">
+            <strong>Brand promise</strong>
+            You are not entering a productivity machine. You are entering a restorative experience designed to help you
+            feel held, seen, and strong enough to move again.
+          </div>
+          <div class="hero-actions">
+            <button class="btn primary" data-route="journeys">Begin Your Journey</button>
+            <button class="btn secondary" data-route="vault">Explore the Vault</button>
+          </div>
+        </div>
+
+        <aside class="hero-card glass">
+          <div class="mist"></div>
+          <div class="ritual-title">
+            <h3>Your Welcome Ritual</h3>
+            <span class="pill">Spa-like • Soft • Safe</span>
+          </div>
+          <div class="ritual-card">
+            <div class="path-mini">
+              <div class="mini">
+                <div class="icon">✍️</div>
+                <div>
+                  <strong>Interactive Journaling</strong>
+                  <span>Show us your BUT and receive a guided prompt, worksheet, and personal tool.</span>
+                </div>
+              </div>
+              <div class="mini">
+                <div class="icon">🎧</div>
+                <div>
+                  <strong>Auditory Journey</strong>
+                  <span>Listen to a short podcast or workshop aligned to the exact challenge you named.</span>
+                </div>
+              </div>
+              <div class="mini">
+                <div class="icon">🤝</div>
+                <div>
+                  <strong>Community Lounge</strong>
+                  <span>Meet others, trade Power Cards, and talk through wins, setbacks, and breakthroughs.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="hero-actions">
+            <button class="btn secondary" data-route="journal">Try the Virtual Journal</button>
+          </div>
+        </aside>
+      </section>
+
+      <section class="section">
+        <div class="section-card glass">
+          <div class="section-head">
+            <div>
+              <h3>What GOYB does</h3>
+              <p>
+                This concept page is built as a working environment for the GOYB community: a beautiful landing page,
+                a guided intake experience, a virtual journal workspace, a Power Card reward system, and a premium vault concept.
+                The tone reflects your blue-gray restorative brand: calm, clear, elevated, and deeply caring.
+              </p>
+            </div>
+          </div>
+          <div class="grid-3">
+            <div class="feature">
+              <div class="icon">🌿</div>
+              <h4>Show us your BUT</h4>
+              <p>Guests name what is in the way — fear, burnout, self-doubt, grief, comparison, perfectionism — and the site matches them to a GOYB pathway that feels personal and emotionally intelligent.</p>
+            </div>
+            <div class="feature">
+              <div class="icon">🪞</div>
+              <h4>Build a personal toolkit</h4>
+              <p>Each journal journey ends with a worksheet, reflective action, and one practical tool to store inside the guest’s evolving locker or vault — a reassembly kit for real life.</p>
+            </div>
+            <div class="feature">
+              <div class="icon">🃏</div>
+              <h4>Earn Power Cards</h4>
+              <p>After completion, guests unlock a Power Card tied to the topic they worked through — a visual reminder of what they reclaimed, rebuilt, or finally named.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="journeys">
+        <div class="section-card glass">
+          <div class="section-head">
+            <div>
+              <h3>Choose your journey</h3>
+              <p>
+                Every path is designed to feel like care. The interface is meant to slow the nervous system down,
+                create clarity, and invite a gentle sense of momentum.
+              </p>
+            </div>
+          </div>
+          <div class="journey">
+            <div class="journey-card">
+              <span class="badge">Path 01</span>
+              <h4>Interactive Journaling</h4>
+              <p>Move through a tailored prompt, answer reflective questions, and create a personal worksheet artifact based on the BUT you want to solve.</p>
+              <button class="btn primary" data-route="journal">Enter Journal Path</button>
+            </div>
+            <div class="journey-card">
+              <span class="badge">Path 02</span>
+              <h4>Auditory Journey</h4>
+              <p>Choose a short podcast episode or pre-recorded workshop and let the voice, story, and framework carry you through the topic in a restorative way.</p>
+              <button class="btn secondary" onclick="document.getElementById('audioPath').scrollIntoView({behavior:'smooth'})">Preview Audio Path</button>
+            </div>
+            <div class="journey-card">
+              <span class="badge">Path 03</span>
+              <h4>Virtual Community</h4>
+              <p>Share what you’re moving through, celebrate wins, trade encouragement, and exchange Power Cards with others on the journey.</p>
+              <button class="btn secondary" data-route="community">Visit Community</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="show-us">
+          <div class="input-card glass">
+            <h4>Show us your BUT</h4>
+            <p class="helper">
+              Tell GOYB what is standing in your way. Pick a mood if you want. Then let the system guide you toward a journal prompt, worksheet, tool, and Power Card.
+            </p>
+            <div class="chips" id="moodChips">
+              <button class="chip active" data-mood="burnout">Burnout</button>
+              <button class="chip" data-mood="fear">Fear</button>
+              <button class="chip" data-mood="self-doubt">Self-doubt</button>
+              <button class="chip" data-mood="grief">Grief</button>
+              <button class="chip" data-mood="overwhelm">Overwhelm</button>
+              <button class="chip" data-mood="validation">Validation</button>
+            </div>
+            <textarea id="butInput" placeholder="Example: My BUT is that I keep shrinking in rooms where I should be leading."></textarea>
+            <div class="hero-actions">
+              <button class="btn primary" id="matchPromptBtn">Match Me to a Prompt</button>
+              <button class="btn secondary" id="fillExampleBtn">Load Example</button>
+            </div>
+          </div>
+
+          <div class="result-card glass">
+            <h4>Your recommended starting point</h4>
+            <div class="result-box" id="matchResult">
+              <div class="label">Welcome</div>
+              <h5 class="prompt-title">A gentle beginning</h5>
+              <p class="quiet">
+                Once you share your BUT, this space will recommend a GOYB prompt and route you into the next best path —
+                journal, audio, or community.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="audioPath">
+        <div class="section-card glass">
+          <div class="section-head">
+            <div>
+              <h3>Auditory path preview</h3>
+              <p>
+                This section demonstrates how the podcast and workshop path could feel: intimate, guided, and emotionally intelligent.
+              </p>
+            </div>
+          </div>
+          <div class="grid-2">
+            <div class="feature">
+              <div class="icon">🎙️</div>
+              <h4>Mini podcast flow</h4>
+              <ul>
+                <li>2-minute welcome and grounding</li>
+                <li>Prompt story or analogy tied to the guest's BUT</li>
+                <li>Reflective questions and a closing power statement</li>
+              </ul>
+            </div>
+            <div class="feature">
+              <div class="icon">🕯️</div>
+              <h4>Workshop flow</h4>
+              <ul>
+                <li>Short visual lesson or guided reflection</li>
+                <li>Downloadable worksheet companion</li>
+                <li>Invitation into the community lounge</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="footer glass">
+        GOYB • Get Off of Your BUT<br/>
+        A calm, luxurious, blue-gray digital sanctuary built to help people restore, reflect, and reclaim power.
+      </div>
+    </div>
+  </div>
+
+  <div id="journal" class="page">
+    <div class="shell">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-mark"></div>
+          <div class="brand-stack">
+            <small>GOYB Experience</small>
+            <h1 class="main">GOYB Virtual Journal</h1>
+            <p class="sub">Your worksheet, toolkit, and Power Card space</p>
+          </div>
+        </div>
+        <nav class="nav">
+          <a href="#home" class="route-link" data-route="home">Home</a>
+          <a href="#journeys" class="route-link" data-route="home">Journeys</a>
+          <a href="#journal" class="route-link active" data-route="journal">Virtual Journal</a>
+          <a href="#community" class="route-link" data-route="community">Community</a>
+          <a href="#vault" class="route-link" data-route="vault">Vault</a>
+        </nav>
+      </header>
+
+      <section class="journal-layout">
+        <aside class="sidebar glass">
+          <h4>Journal Pathways</h4>
+          <div class="nav-list">
+            <button class="nav-btn active prompt-option" data-prompt="robin">Always the Robin, Never the Batman</button>
+            <button class="nav-btn prompt-option" data-prompt="insanity">Protecting Your Insanity</button>
+            <button class="nav-btn prompt-option" data-prompt="billboard">I Am a Walking Billboard</button>
+            <button class="nav-btn prompt-option" data-prompt="scroll">The Scrolling Effect</button>
+            <button class="nav-btn prompt-option" data-prompt="power">Power Outage</button>
+          </div>
+
+          <div class="vault-cards">
+            <div class="vault-card">
+              <div class="label">Step 01</div>
+              <strong>Select prompt</strong>
+            </div>
+            <div class="vault-card">
+              <div class="label">Step 02</div>
+              <strong>Complete worksheet</strong>
+            </div>
+            <div class="vault-card">
+              <div class="label">Step 03</div>
+              <strong>Claim Power Card</strong>
+            </div>
+          </div>
+        </aside>
+
+        <main class="workspace glass">
+          <div class="label">Current prompt</div>
+          <h3 id="journalTitle" style="margin:8px 0 8px;font-size:2rem">Always the Robin, Never the Batman</h3>
+          <p id="journalDesc" class="helper">
+            For the person who keeps ending up in the almost position — almost chosen, almost seen, almost leading — while hiding inside humility and support roles.
+          </p>
+
+          <div class="worksheet">
+            <div class="two-col">
+              <div class="field">
+                <label>What is the BUT you are working through?</label>
+                <input id="fieldBut" type="text" placeholder="My BUT is..." />
+              </div>
+              <div class="field">
+                <label>What role have you been overplaying?</label>
+                <input id="fieldRole" type="text" placeholder="Example: helper, fixer, quiet supporter" />
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Where in your life are you settling for “almost”?</label>
+              <textarea id="fieldAlmost" placeholder="Describe the place where you have stayed in the background..."></textarea>
+            </div>
+
+            <div class="two-col">
+              <div class="field">
+                <label>What would stepping forward look like?</label>
+                <textarea id="fieldForward" placeholder="What does leadership, ownership, or visibility look like here?"></textarea>
+              </div>
+              <div class="field">
+                <label>What is one tool you want in your GOYB kit?</label>
+                <textarea id="fieldTool" placeholder="Boundary, script, grounding phrase, decision rule, ritual..."></textarea>
+              </div>
+            </div>
+
+            <div class="hero-actions">
+              <button class="btn primary" id="generateCardBtn">Generate Power Card</button>
+              <button class="btn secondary" id="saveVaultBtn">Save to Vault Preview</button>
+            </div>
+
+            <div class="power-card" id="powerCard">
+              <small>Power Card</small>
+              <h5 id="powerCardTitle">The Cape Claim</h5>
+              <p id="powerCardBody">
+                You are allowed to stop treating your power like it belongs to someone else. The next step is not becoming louder.
+                It is becoming truer.
+              </p>
+            </div>
+          </div>
+        </main>
+      </section>
+    </div>
+  </div>
+
+  <div id="community" class="page">
+    <div class="shell">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-mark"></div>
+          <div class="brand-stack">
+            <small>GOYB Experience</small>
+            <h1 class="main">GOYB Community Lounge</h1>
+            <p class="sub">Recovery, reflection, and shared power</p>
+          </div>
+        </div>
+        <nav class="nav">
+          <a href="#home" class="route-link" data-route="home">Home</a>
+          <a href="#journal" class="route-link" data-route="journal">Virtual Journal</a>
+          <a href="#community" class="route-link active" data-route="community">Community</a>
+          <a href="#vault" class="route-link" data-route="vault">Vault</a>
+        </nav>
+      </header>
+
+      <section class="community-grid">
+        <div class="community-feed glass">
+          <div class="section-head">
+            <div>
+              <h3>Community feed</h3>
+              <p>A gentle prototype of what member interaction could feel like: warm, honest, and encouraging.</p>
+            </div>
+          </div>
+
+          <div class="post">
+            <strong>Today’s win • Quiet courage</strong>
+            <p>I finally said what I needed in a meeting without apologizing first. It felt small, but it was not small.</p>
+          </div>
+
+          <div class="post">
+            <strong>Power Card exchange • Burnout to boundary</strong>
+            <p>Trading my “Protecting Your Insanity” Power Card for a reminder that rest is not a reward. It is a requirement.</p>
+          </div>
+
+          <div class="post">
+            <strong>Prompt circle • Walking Billboard</strong>
+            <p>What message is your energy giving off even when your mouth says you are fine?</p>
+          </div>
+        </div>
+
+        <aside class="community-lounge glass">
+          <div class="section-head">
+            <div>
+              <h3>Ways to connect</h3>
+              <p>Designed for members who want care, conversation, and a sense of progress.</p>
+            </div>
+          </div>
+          <div class="grid-2">
+            <div class="feature">
+              <div class="icon">💬</div>
+              <h4>Topic circles</h4>
+              <p>Burnout, identity shifts, confidence rebuilding, grief, boundaries, leadership, and more.</p>
+            </div>
+            <div class="feature">
+              <div class="icon">🫶</div>
+              <h4>1:1 support</h4>
+              <p>Premium vault members could access guided conversations and more personalized recommendations.</p>
+            </div>
+            <div class="feature">
+              <div class="icon">🃏</div>
+              <h4>Power Card swaps</h4>
+              <p>Members exchange cards as encouragement, accountability, and celebration.</p>
+            </div>
+            <div class="feature">
+              <div class="icon">🌙</div>
+              <h4>Recovery rooms</h4>
+              <p>Calm digital rooms for breathing, journaling, listening, and easing back into yourself.</p>
+            </div>
+          </div>
+        </aside>
+      </section>
+    </div>
+  </div>
+
+  <div id="vault" class="page">
+    <div class="shell">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-mark"></div>
+          <div class="brand-stack">
+            <small>GOYB Experience</small>
+            <h1 class="main">GOYB Personal Vault</h1>
+            <p class="sub">Your private locker, collection, and premium sanctuary</p>
+          </div>
+        </div>
+        <nav class="nav">
+          <a href="#home" class="route-link" data-route="home">Home</a>
+          <a href="#journal" class="route-link" data-route="journal">Virtual Journal</a>
+          <a href="#community" class="route-link" data-route="community">Community</a>
+          <a href="#vault" class="route-link active" data-route="vault">Vault</a>
+        </nav>
+      </header>
+
+      <section class="pricing glass">
+        <div class="section-head">
+          <div>
+            <h3>The premium vault concept</h3>
+            <p>
+              This section presents your subscription idea: a personal locker where members collect prompts, worksheets,
+              Power Cards, saved reflections, and more personalized support options.
+            </p>
+          </div>
+        </div>
+
+        <div class="tier">
+          <div class="price-box">
+            <div class="label">Member experience</div>
+            <h4 style="font-size:1.5rem;margin:8px 0 6px">Vault features</h4>
+            <ul style="color:var(--muted);line-height:1.9;padding-left:20px">
+              <li>Saved prompts, worksheets, and earned Power Cards</li>
+              <li>Personalized recommendations based on prior BUT themes</li>
+              <li>Private reflection history and toolkit builder</li>
+              <li>1:1 guided conversation or concierge-style support concept</li>
+              <li>Access to premium podcast tracks, workshops, and community rooms</li>
+              <li>Branded GOYB member experience rooted in calm, care, and soft accountability</li>
+            </ul>
+          </div>
+
+          <div class="price-box">
+            <div class="label">Subscription placeholder</div>
+            <div class="price">$24</div>
+            <div style="color:var(--muted);margin-top:4px">per month • concept only</div>
+            <div class="hero-actions" style="margin-top:20px">
+              <button class="btn primary">Join the Vault</button>
+              <button class="btn secondary" data-route="home">Back to Welcome</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="vault-cards">
+          <div class="vault-card">
+            <div class="label">Locker</div>
+            <strong>Saved toolkit items</strong>
+            <p class="quiet">Scripts, grounding tools, reflection notes, and custom pathways.</p>
+          </div>
+          <div class="vault-card">
+            <div class="label">Collection</div>
+            <strong>Power Card gallery</strong>
+            <p class="quiet">A visual deck showing what the member has worked through and reclaimed.</p>
+          </div>
+          <div class="vault-card">
+            <div class="label">Concierge</div>
+            <strong>Personal guidance</strong>
+            <p class="quiet">A premium-feeling path for members who want more tailored support.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const pages = document.querySelectorAll('.page');
+    const routeLinks = document.querySelectorAll('.route-link, [data-route]');
+    const moodChips = document.querySelectorAll('.chip');
+    const matchBtn = document.getElementById('matchPromptBtn');
+    const fillExampleBtn = document.getElementById('fillExampleBtn');
+    const butInput = document.getElementById('butInput');
+    const matchResult = document.getElementById('matchResult');
+    const promptOptions = document.querySelectorAll('.prompt-option');
+    const journalTitle = document.getElementById('journalTitle');
+    const journalDesc = document.getElementById('journalDesc');
+    const generateCardBtn = document.getElementById('generateCardBtn');
+    const saveVaultBtn = document.getElementById('saveVaultBtn');
+
+    let selectedMood = 'burnout';
+
+    const promptLibrary = {
+      "robin": {
+        title: "Always the Robin, Never the Batman",
+        desc: "For the person who keeps ending up in the almost position — almost chosen, almost seen, almost leading — while hiding inside humility and support roles."
+      },
+      "insanity": {
+        title: "Protecting Your Insanity",
+        desc: "For the person who feels like life, work, or other people keep making demands on their peace and need a way to protect what is still whole."
+      },
+      "billboard": {
+        title: "I Am a Walking Billboard",
+        desc: "For the person ready to look at what their presence, patterns, and energy are advertising even when they say very little."
+      },
+      "scroll": {
+        title: "The Scrolling Effect",
+        desc: "For the person who keeps numbing, avoiding, or stalling in the feed instead of tending to what their soul is actually asking for."
+      },
+      "power": {
+        title: "Power Outage",
+        desc: "For the person who feels dim, drained, or disconnected and needs to begin rewiring what has been depleted."
+      }
+    };
+
+    function setRoute(route){
+      pages.forEach(p => p.classList.remove('active'));
+      const target = document.getElementById(route) || document.getElementById('home');
+      target.classList.add('active');
+      document.querySelectorAll('.route-link').forEach(link => {
+        link.classList.toggle('active', link.dataset.route === route);
+      });
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+
+    document.querySelectorAll('[data-route]').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        const route = el.dataset.route;
+        if(route) setRoute(route);
+      });
+    });
+
+    moodChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        moodChips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        selectedMood = chip.dataset.mood;
+      });
+    });
+
+    fillExampleBtn?.addEventListener('click', () => {
+      butInput.value = "My BUT is that I am exhausted, I keep shrinking to make others comfortable, and I have started doubting whether my voice matters.";
+      selectedMood = 'burnout';
+      moodChips.forEach(c => c.classList.toggle('active', c.dataset.mood === 'burnout'));
+    });
+
+    function matchPrompt(text, mood){
+      const input = (text || "").toLowerCase();
+      if(input.includes('shrink') || input.includes('background') || input.includes('almost') || input.includes('lead')){
+        return {
+          key: 'robin',
+          path: 'Interactive Journaling',
+          tool: 'CAPE-style visibility tool',
+          card: 'The Cape Claim'
+        };
+      }
+      if(input.includes('scroll') || input.includes('avoid') || input.includes('numb')){
+        return { key:'scroll', path:'Interactive Journaling', tool:'From Scroll to Soul worksheet', card:'The Return to Presence' };
+      }
+      if(input.includes('drain') || input.includes('empty') || input.includes('dim') || mood === 'burnout' || mood === 'overwhelm'){
+        return { key:'power', path:'Auditory + Journal Blend', tool:'Reset the Circuit worksheet', card:'The Light Returns' };
+      }
+      if(input.includes('validate') || input.includes('approval') || mood === 'validation' || mood === 'self-doubt'){
+        return { key:'billboard', path:'Journal + Community', tool:'Message mapping worksheet', card:'The Message Shift' };
+      }
+      if(input.includes('peace') || input.includes('protect') || input.includes('chaos') || mood === 'fear'){
+        return { key:'insanity', path:'Interactive Journaling', tool:'Personal protection plan', card:'The Peace Keeper' };
+      }
+      if(mood === 'grief'){
+        return { key:'power', path:'Auditory Journey', tool:'Gentle reset ritual', card:'The Soft Return' };
+      }
+      return { key:'robin', path:'Interactive Journaling', tool:'Visibility reflection worksheet', card:'The Step Forward' };
+    }
+
+    matchBtn?.addEventListener('click', () => {
+      const text = butInput.value.trim();
+      const result = matchPrompt(text, selectedMood);
+      const info = promptLibrary[result.key];
+      matchResult.innerHTML = `
+        <div class="label">Matched prompt</div>
+        <h5 class="prompt-title">${info.title}</h5>
+        <p class="quiet">${info.desc}</p>
+        <div class="steps">
+          <div class="step"><strong>Recommended path:</strong> ${result.path}</div>
+          <div class="step"><strong>Toolkit item:</strong> ${result.tool}</div>
+          <div class="step"><strong>Power Card:</strong> ${result.card}</div>
+        </div>
+        <div class="hero-actions">
+          <button class="btn primary" onclick="setRoute('journal')">Open Virtual Journal</button>
+          <button class="btn secondary" onclick="setRoute('community')">Visit Community</button>
+        </div>
+      `;
+      if(document.getElementById('fieldBut')) document.getElementById('fieldBut').value = text;
+      if(info){
+        journalTitle.textContent = info.title;
+        journalDesc.textContent = info.desc;
+      }
+    });
+
+    promptOptions.forEach(btn => {
+      btn.addEventListener('click', () => {
+        promptOptions.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const info = promptLibrary[btn.dataset.prompt];
+        journalTitle.textContent = info.title;
+        journalDesc.textContent = info.desc;
+      });
+    });
+
+    generateCardBtn?.addEventListener('click', () => {
+      const but = document.getElementById('fieldBut').value.trim() || "your BUT";
+      const role = document.getElementById('fieldRole').value.trim() || "the role you have outgrown";
+      const forward = document.getElementById('fieldForward').value.trim() || "take one honest step forward";
+      const tool = document.getElementById('fieldTool').value.trim() || "a tool that protects your peace and power";
+
+      document.getElementById('powerCardTitle').textContent = "Your next reclaimed truth";
+      document.getElementById('powerCardBody').textContent =
+        `You named ${but}. You noticed how ${role} has shaped your choices. Your next move is to ${forward}. Keep ${tool} in your GOYB kit as proof that your healing is allowed to look intentional, visible, and real.`;
+    });
+
+    saveVaultBtn?.addEventListener('click', () => {
+      alert("Vault preview saved. In a live version, this would store the worksheet, tool, and Power Card inside the member’s personal locker.");
+    });
+
+    const initialHash = window.location.hash.replace('#','');
+    if(initialHash && document.getElementById(initialHash)) setRoute(initialHash);
+  </script>
+</body>
+</html>
